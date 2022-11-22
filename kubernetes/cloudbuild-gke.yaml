@@ -1,0 +1,21 @@
+steps:
+#Build inside Docker
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'src/main/docker/Dockerfile.multistage', '--tag=asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME', '.']
+#Docker push
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME']
+#Deploy GKE
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - run
+  - --filename=kubernetes-all.yaml
+  - --image=asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME
+  - --location=asia-northeast1
+  - --cluster=$CLUSTER_NAME
+  - --timeout=30m
+  timeout: 1800s
+#images: ['asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME']
+timeout: 3600s
+options:
+  machineType: E2_HIGHCPU_32

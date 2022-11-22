@@ -1,0 +1,14 @@
+steps:
+#Build inside Docker
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'src/main/docker/Dockerfile.multistage', '--tag=asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME', '.']
+#Docker push
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME']
+#Deploy Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'gke-quarkus', '--image=asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME', '--region=asia-northeast1', '--allow-unauthenticated', '--update-env-vars=PROJECT_ID=$PROJECT_ID', '--service-account=spanner-client@$PROJECT_ID.iam.gserviceaccount.com']
+timeout: 3600s
+options:
+  machineType: E2_HIGHCPU_32

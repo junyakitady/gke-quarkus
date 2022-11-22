@@ -20,9 +20,9 @@
 - Quarkus
 - DB アクセスは Hibernate ORM を利用
 
-※JavaEE8 バージョンは[こちら](https://github.com/junyakitady/gke-javaee/blob/main/README.md)
+※JavaEE8 バージョンは[こちら](https://github.com/junyakitady/gke-javaee/)
 
-※Spring Boot バージョンは[こちら](https://github.com/junyakitady/gke-spring/blob/main/README.md)
+※Spring Boot バージョンは[こちら](https://github.com/junyakitady/gke-spring/)
 
 
 # Cloud Run デプロイ手順

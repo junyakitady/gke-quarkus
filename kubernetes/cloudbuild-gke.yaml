@@ -9,10 +9,10 @@ steps:
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
-  - --filename=kubernetes-all.yaml
+  - --filename=kubernetes/kubernetes-all.yaml
   - --image=asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME
   - --location=asia-northeast1
-  - --cluster=$CLUSTER_NAME
+  - --cluster=$_CLUSTER_NAME
   - --timeout=30m
   timeout: 1800s
 #images: ['asia-northeast1-docker.pkg.dev/$PROJECT_ID/app/gke-quarkus:$TAG_NAME']

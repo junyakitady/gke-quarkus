@@ -43,9 +43,13 @@ spec:
           httpGet:
             path: /hostinfo
             port: 8080
+        readinessProbe:
+          httpGet:
+            path: /item
+            port: 8080
         resources:
           requests:
-            memory: "500Mi"
+            memory: "512Mi"
             cpu: "250m"
 ---
 apiVersion: apps/v1
@@ -85,9 +89,13 @@ spec:
           httpGet:
             path: /hostinfo
             port: 8080
+        readinessProbe:
+          httpGet:
+            path: /item
+            port: 8080
         resources:
           requests:
-            memory: "500Mi"
+            memory: "512Mi"
             cpu: "250m"
 ---
 apiVersion: v1

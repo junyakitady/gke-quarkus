@@ -1,10 +1,8 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  annotations:
-    iam.gke.io/gcp-service-account: spanner-client@noogler-2.iam.gserviceaccount.com
   name: k8s-spanner
-#gcloud iam service-accounts add-iam-policy-binding spanner-client@noogler-2.iam.gserviceaccount.com --role roles/iam.workloadIdentityUser --member "serviceAccount:noogler-2.svc.id.goog[default/k8s-spanner]"
+#gcloud projects add-iam-policy-binding projects/noogler-2 --role=roles/spanner.databaseUser --member=principal://iam.googleapis.com/projects/896536828389/locations/global/workloadIdentityPools/noogler-2.svc.id.goog/subject/ns/default/sa/k8s-spanner --condition=None
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,6 +21,9 @@ spec:
         app: quarkus-front
     spec:
       serviceAccountName: k8s-spanner
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      terminationGracePeriodSeconds: 25
       containers:
       - name: quarkus-front-container
         image: asia-northeast1-docker.pkg.dev/noogler-2/app/gke-quarkus:latest
@@ -49,6 +50,9 @@ spec:
             port: 8080
         resources:
           requests:
+            memory: "100Mi"
+            cpu: "50m"
+          limits:
             memory: "512Mi"
             cpu: "250m"
 ---
@@ -69,6 +73,9 @@ spec:
         app: quarkus-back
     spec:
       serviceAccountName: k8s-spanner
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      terminationGracePeriodSeconds: 25
       containers:
       - name: quarkus-back-container
         image: asia-northeast1-docker.pkg.dev/noogler-2/app/gke-quarkus:latest
@@ -95,6 +102,9 @@ spec:
             port: 8080
         resources:
           requests:
+            memory: "100Mi"
+            cpu: "50m"
+          limits:
             memory: "512Mi"
             cpu: "250m"
 ---

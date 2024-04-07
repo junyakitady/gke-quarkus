@@ -1,11 +1,11 @@
 package com.kitady.gke.quarkus.jpa;
 
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 @RequestScoped
 public class ItemDao {
@@ -22,8 +22,7 @@ public class ItemDao {
    */
   @Transactional
   public List<Item> getItemList(String uuid) {
-    String sql =
-        "SELECT UUID, NAME, NAMEJP, BREWERY, TYPE, DIV, ITEMNO, PRICE, EXPLANATION, REGDATE, TIMEZONE, TIMESTMP, VERSION FROM ITEM";
+    String sql = "SELECT UUID, NAME, NAMEJP, BREWERY, TYPE, DIV, ITEMNO, PRICE, EXPLANATION, REGDATE, TIMEZONE, TIMESTMP, VERSION FROM ITEM";
     if (uuid != null) {
       sql += " WHERE UUID=:uuid";
     }

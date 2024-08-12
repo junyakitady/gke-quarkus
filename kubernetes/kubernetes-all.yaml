@@ -50,7 +50,7 @@ spec:
             port: 8080
         resources:
           requests:
-            memory: "100Mi"
+            memory: "256Mi"
             cpu: "50m"
           limits:
             memory: "512Mi"
@@ -102,7 +102,7 @@ spec:
             port: 8080
         resources:
           requests:
-            memory: "100Mi"
+            memory: "256Mi"
             cpu: "50m"
           limits:
             memory: "512Mi"
